@@ -1,0 +1,23 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: "10 */6 * * *"   # هر 6 ساعت و 10 دقیقه
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Sync with upstream
+        uses: repo-sync/github-sync@v2
+        with:
+          source_repo: "F0rc3Run/F0rc3Run"
+          source_branch: "main"
+          destination_branch: "main"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
